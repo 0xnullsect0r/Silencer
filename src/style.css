@@ -1,0 +1,398 @@
+/* ─── Design tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:       #0d0d0d;
+  --surface:  #1a1a1a;
+  --raised:   #222222;
+  --border:   #2a2a2a;
+  --text:     #ffffff;
+  --muted:    #6b6b6b;
+  --accent:   #00e5ff;
+  --accent-dim: rgba(0, 229, 255, 0.12);
+  --danger:   #ff4444;
+  --success:  #00ff88;
+  --warn:     #ffcc00;
+  --radius:   10px;
+  --font:     system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100%;
+}
+
+/* ─── App shell ──────────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px 32px;
+  gap: 0;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--text);
+}
+
+/* ─── Status bar ─────────────────────────────────────────────────── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+
+.status-badge--yellow {
+  background: rgba(255, 204, 0, 0.15);
+  color: var(--warn);
+}
+
+.status-badge--green {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--success);
+}
+
+.status-latency,
+.status-reduction {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.status-reduction {
+  color: var(--success);
+}
+
+.status-dot {
+  font-size: 10px;
+}
+
+.status-dot--on  { color: var(--accent); }
+.status-dot--off { color: var(--muted); }
+.status-dot--err { color: var(--danger); }
+
+/* ─── Spectrum analyzer ──────────────────────────────────────────── */
+.spectrum-wrapper {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #111;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.spectrum-canvas {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+
+.spectrum-legend {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.legend-item {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.legend-item--input  { color: rgba(255,80,80,0.85); background: rgba(255,80,80,0.08); }
+.legend-item--output { color: var(--accent); background: var(--accent-dim); }
+
+/* ─── Controls section ───────────────────────────────────────────── */
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ─── Level meter ────────────────────────────────────────────────── */
+.level-meter-wrapper {
+  flex: 1;
+  min-height: 100px;
+}
+
+.level-meter-canvas {
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+/* ─── Power area ─────────────────────────────────────────────────── */
+.power-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.power-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ─── Power button ───────────────────────────────────────────────── */
+.power-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.power-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.power-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.power-btn--on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  box-shadow:
+    0 0 24px rgba(0, 229, 255, 0.45),
+    0 0 56px rgba(0, 229, 255, 0.18);
+}
+
+.power-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Sliders ────────────────────────────────────────────────────── */
+.sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-label {
+  width: 92px;
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.slider {
+  flex: 1;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+  transition: box-shadow 0.2s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.7);
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+.slider-value {
+  width: 68px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+/* ─── Error banner ───────────────────────────────────────────────── */
+.error-banner {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  color: #ff8080;
+  font-size: 13px;
+}
+
+/* ─── Settings panel ─────────────────────────────────────────────── */
+.settings-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.settings-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+  user-select: none;
+  list-style: none;
+}
+
+.settings-summary::-webkit-details-marker { display: none; }
+
+.settings-summary:hover { color: var(--text); }
+
+details[open] .settings-summary svg {
+  transform: rotate(180deg);
+}
+
+.settings-summary svg {
+  transition: transform 0.2s ease;
+}
+
+.settings-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+/* ─── Filter tap buttons ─────────────────────────────────────────── */
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tap-group {
+  display: flex;
+  gap: 6px;
+}
+
+.tap-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tap-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.tap-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ─── Reset button ───────────────────────────────────────────────── */
+.reset-btn {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.reset-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ─── Utilities ──────────────────────────────────────────────────── */
+.mono { font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+
+/* ─── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .app { padding: 0 14px 24px; }
+
+  .spectrum-canvas { height: 160px; }
+
+  .main-row { gap: 16px; }
+
+  .power-btn { width: 70px; height: 70px; }
+
+  .slider-label { width: 76px; font-size: 12px; }
+
+  .tap-btn { padding: 4px 7px; font-size: 11px; }
+}
