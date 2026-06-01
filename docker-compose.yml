@@ -1,0 +1,6 @@
+services:
+  silencer:
+    build: .
+    ports:
+      - "7999:80"
+    restart: unless-stopped
